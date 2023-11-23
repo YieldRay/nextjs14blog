@@ -1,0 +1,48 @@
+.cta {
+    --bg: #e0f2fe;
+    position: relative;
+    padding: 0.25rem 0.25rem;
+    transition: all 0.2s ease;
+    border: none;
+    background: none;
+}
+
+.cta:before {
+    --size: 1.5rem;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: block;
+    border-radius: var(--size);
+    background: var(--bg);
+    width: var(--size);
+    height: var(--size);
+    transition: all 0.3s ease;
+}
+
+.cta span {
+    position: relative;
+    font-family:
+        Consolas,
+        Monaco,
+        Lucida Console,
+        Liberation Mono,
+        DejaVu Sans Mono,
+        Bitstream Vera Sans Mono,
+        Courier New,
+        monospace;
+    letter-spacing: 0.05em;
+    background-color: transparent;
+    color: #374151;
+}
+
+.cta.active::before,
+.cta:hover:before {
+    width: 100%;
+}
+
+.cta:active {
+    transform: scale(0.95);
+}
