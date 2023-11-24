@@ -1,10 +1,19 @@
+import clsx from "clsx"
 import { format, formatISO } from "date-fns"
 
-export default function Time({ timestamp }: { timestamp: number }) {
-    const date = new globalThis.Date(timestamp)
+export default function Time({
+    date,
+    className,
+}: {
+    date: Date
+    className?: string
+}) {
     return (
         <time
-            className="text-sm py-0.5 text-gray-500 dark:text-stone-100"
+            className={clsx(
+                "text-sm py-0.5 text-gray-500 dark:text-stone-100",
+                className
+            )}
             dateTime={formatISO(date)}
         >
             {format(date, "LLLL d, yyyy")}

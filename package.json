@@ -9,24 +9,28 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "github-slugger": "^2.0.0",
+        "marked-alert": "^2.0.1",
         "next": "14.0.3",
         "react": "^18",
-        "react-dom": "^18"
+        "react-dom": "^18",
+        "use-prefers-color-scheme": "^1.1.3"
     },
     "devDependencies": {
         "@types/node": "^20",
         "@types/react": "^18",
         "@types/react-dom": "^18",
         "autoprefixer": "^10.0.1",
-        "postcss": "^8",
-        "sass": "^1.69.5",
-        "tailwindcss": "^3.3.0",
-        "typescript": "^5",
         "clsx": "^2.0.0",
         "date-fns": "^2.30.0",
         "gray-matter": "^4.0.3",
         "highlight.js": "^11.9.0",
         "marked": "^10.0.0",
-        "marked-highlight": "^2.0.7"
+        "marked-highlight": "^2.0.7",
+        "postcss": "^8",
+        "sass": "^1.69.5",
+        "tailwindcss": "^3.3.0",
+        "typescript": "^5",
+        "zod": "^3.22.4"
     }
 }

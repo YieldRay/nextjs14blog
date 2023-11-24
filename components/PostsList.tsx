@@ -10,7 +10,7 @@ export default function PostsList({ posts }: { posts: Post[] }) {
                     <Link href={`/posts/${id}/`} className="flex flex-col">
                         <span className="hover:underline">{title}</span>
                         <small className="text-sm">
-                            <Time timestamp={date} />
+                            <Time date={date} />
                         </small>
                     </Link>
                 </li>

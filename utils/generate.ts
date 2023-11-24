@@ -1,43 +1,48 @@
 import fs from "node:fs/promises"
 import path from "node:path"
 import matter from "gray-matter"
-import { parseDate, parseMarkdown } from "./parser"
+import { parseMarkdown } from "./markdownParser"
 import { cacheAsync } from "./decorator"
+import { z } from "zod"
 
 export interface Post {
     id: string
     title: string
     content: string
-    date: number
-    update?: number
-    tags?: string[]
-    categories?: string[]
+    date: Date
+    update: Date
+    tags: string[]
+    categories: string[]
 }
 
 export const postsDirectory = path.join(process.cwd(), "_posts")
 
 async function getAllIds() {
     const files = (await fs.readdir(postsDirectory)).filter((file) =>
-        file.endsWith(".md"),
+        file.endsWith(".md")
     )
     return files.map((file) => file.replace(/\.md$/, ""))
 }
 
-export async function getPostById(id: string) {
+export async function getPostById(id: string): Promise<Post> {
     const filepath = path.join(postsDirectory, `${id}.md`)
     const gmMarkdown = await fs.readFile(filepath, "utf-8")
     const { data, content } = matter(gmMarkdown)
-
     const fileStat = await fs.stat(filepath)
-    const date = Reflect.has(data, "date")
-        ? parseDate(data.date)
-        : fileStat.birthtimeMs
-    const update = Reflect.has(data, "update")
-        ? parseDate(data.update)
-        : fileStat.atimeMs
-    const title = Reflect.has(data, "title") ? data.title : id
 
-    return { ...data, id, title, date, update, content } as Post
+    const gmSchema = z.object({
+        title: z.string().default(id),
+        date: z.coerce.date().default(() => new Date(fileStat.birthtimeMs)),
+        update: z.coerce.date().default(() => new Date(fileStat.atimeMs)),
+        tags: z.array(z.string()).default([]),
+        categories: z.array(z.string()).default([]),
+    })
+
+    const parsed = gmSchema.parse(data)
+    const post = { id, content, ...parsed }
+
+
+    return post
 }
 
 export function parsePostContentToHTML(content: string) {
@@ -48,7 +53,7 @@ export function parsePostContentToHTML(content: string) {
 export async function getAllPosts() {
     const ids = await getAllIds()
     const all = await Promise.all(ids.map(getPostById))
-    return all.sort((a, b) => b.date - a.date)
+    return all.sort((a, b) => b.date.getTime() - a.date.getTime())
 }
 
 export const getAllCachedPosts = cacheAsync(getAllPosts)

@@ -1,10 +1,11 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import FancyButton from "@/components/FancyButton"
 import { usePathname } from "next/navigation"
 import { pages } from "@/app/config"
 import Link from "next/link"
+import usePrefersColorScheme from "use-prefers-color-scheme"
 
 export default function NavLink() {
     "use client"
@@ -25,24 +26,50 @@ export default function NavLink() {
     )
 }
 
-export function DarkModeButton() {
-    "use client"
+function useTheme() {
     const localStorage = globalThis.localStorage
     const document = globalThis.document
-    const [dark, setDark] = useState(localStorage?.getItem("dark") === "true")
-    useEffect(() => {
-        if (localStorage?.getItem("dark") === "true") {
+    const prefersColorScheme = usePrefersColorScheme()
+    const [isThemeDark, setThemeDark] = useState(
+        prefersColorScheme === "dark" ||
+            localStorage?.getItem("theme") === "dark"
+    )
+    const syncClassName = (isDark: boolean) => {
+        if (!document) return
+        if (isDark) {
             document.documentElement.classList.add("dark")
+        } else {
+            document.documentElement.classList.remove("dark")
         }
-    }, [])
+    }
+    syncClassName(isThemeDark)
+    const $setThemeDark = () => {
+        setThemeDark(true)
+        syncClassName(true)
+    }
+    const $setThemeLight = () => {
+        setThemeDark(false)
+        syncClassName(false)
+    }
+    return {
+        isThemeDark,
+        setThemeDark: $setThemeDark,
+        setThemeLight: $setThemeLight,
+    }
+}
+
+export function DarkModeButton() {
+    "use client"
+    const { isThemeDark, setThemeDark, setThemeLight } = useTheme()
     return (
         <FancyButton
-            active={dark}
+            active={isThemeDark}
             onClick={() => {
-                const to = !document.documentElement.classList.contains("dark")
-                document.documentElement.classList.toggle("dark")
-                setDark(to)
-                localStorage?.setItem("dark", to.toString())
+                if (isThemeDark) {
+                    setThemeLight()
+                } else {
+                    setThemeDark()
+                }
             }}
         >
             Darkmode

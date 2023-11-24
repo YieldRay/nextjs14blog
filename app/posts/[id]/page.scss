@@ -1,0 +1,81 @@
+.blog-article {
+    scroll-behavior: smooth;
+    img {
+        max-width: 100%;
+        display: inline-block;
+    }
+
+    @media screen and (width>=767px) {
+        display: flex;
+        .markdown-body {
+            width: 80%;
+        }
+    }
+
+    .markdown-body {
+        max-width: 100%;
+        overflow: hidden;
+        pre {
+            margin: 2px 0;
+            background-color: #161b22 !important;
+        }
+    }
+
+    .table-of-contents {
+        text-wrap: nowrap;
+        font-size: 13px;
+        text-overflow: ellipsis;
+        overflow-x: hidden;
+        overflow-y: auto;
+        flex-shrink: 1;
+
+        :any-link:hover {
+            text-decoration: underline;
+        }
+
+        &-normal {
+            display: none;
+            @media screen and (width>=767px) {
+                display: block;
+            }
+            // take care of the HTML structure
+            & > * {
+                position: sticky;
+                top: 0;
+                left: 0;
+            }
+            transform: translateX(1rem);
+        }
+
+        &-floating {
+            @media screen and (width>=767px) {
+                display: none;
+            }
+            position: fixed;
+            top: 0;
+            right: 0;
+            max-height: 100%;
+            max-width: 100%;
+            overflow-x:hidden;
+            overflow-y: scroll;
+            summary {
+                text-align: right;
+                cursor: pointer;
+                user-select: none;
+                font-size: 12px;
+                padding: 0 16px;
+                color: #66ccff;
+            }
+            background: rgb(255 255 255 / 0.2);
+            backdrop-filter: blur(1rem);
+            border-bottom-left-radius: 8px;
+            padding: 4px;
+        }
+    }
+
+    .markdown-body,
+    .markdown-body * {
+        max-width: 100%;
+        transition: color 0.15s, background-color 0.3s;
+    }
+}

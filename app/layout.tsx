@@ -1,9 +1,9 @@
 import "./globals.css"
+import "./github-markdown.scss"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { profileImage, name, siteTitle, description } from "@/app/config"
-import MainContainer from "@/components/MainContainer"
 import NavLinks from "./NavLinks"
 
 export const metadata: Metadata = {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     description,
     openGraph: {
         images: `https://og-image.vercel.app/${encodeURI(
-            siteTitle,
+            siteTitle
         )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`,
     },
 }
@@ -28,9 +28,7 @@ export default function RootLayout({
                     <Avatar />
                     <NavLinks />
                 </header>
-                <MainContainer className="max-w-[800px]">
-                    {children}
-                </MainContainer>
+                {children}
             </body>
         </html>
     )

@@ -1,4 +1,4 @@
-import "./vs2015.min.css"
+import "./vs2015.css"
 import "./page.scss"
 
 import {
@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(
     { params }: { params: { id: string } },
-    parent: ResolvingMetadata,
+    parent: ResolvingMetadata
 ): Promise<Metadata> {
     const id = params.id
     const post = await getPostById(id)
@@ -32,17 +32,17 @@ export async function generateMetadata(
 
 export default async function Page({ params }: { params: { id: string } }) {
     const post = await getPostById(params.id)
-    const html = parsePostContentToHTML(post.content)
+    const html = await parsePostContentToHTML(post.content)
 
     return (
         <>
-            <article>
+            <article >
                 <section className="py-4">
                     <h1 className="py-8 text-center mx-auto">{post.title}</h1>
 
                     <div className="flex items-center justify-center gap-2">
                         <div className="flex items-center whitespace-nowrap">
-                            <Clock /> <Time timestamp={post.date} />
+                            <Clock /> <Time date={post.date} />
                         </div>
                         <div className="flex items-center whitespace-nowrap">
                             <Tag />
@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                     </div>
                 </section>
 
-                <section dangerouslySetInnerHTML={{ __html: html }}></section>
+                <section  className="blog-article" dangerouslySetInnerHTML={{ __html: html }}></section>
             </article>
         </>
     )
