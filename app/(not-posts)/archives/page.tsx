@@ -1,6 +1,14 @@
+import { siteTitle } from "@/app/config"
 import { getArchives } from "@/utils/generate"
+import { Metadata } from "next"
 import Link from "next/link"
 import { Fragment } from "react"
+
+export async function generateMetadata(): Promise<Metadata> {
+    return {
+        title: `Archives | ${siteTitle}`,
+    }
+}
 
 export default async function Page() {
     const archives = await getArchives()

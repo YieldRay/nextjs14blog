@@ -1,11 +1,10 @@
-import { siteTitle, description } from "@/app/config"
+import { siteTitle } from "@/app/config"
 import { getTags } from "@/utils/generate"
 import { Metadata } from "next"
 import Link from "next/link"
 
 export const metadata: Metadata = {
     title: `Tags | ${siteTitle}`,
-    description,
 }
 
 export default async function Page() {

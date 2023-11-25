@@ -1,5 +1,7 @@
 import { getTags } from "@/utils/generate"
 import PostsList from "@/components/PostsList"
+import { siteTitle } from "@/app/config"
+import { Metadata } from "next"
 
 export async function generateStaticParams() {
     const tags = await getTags()
@@ -7,6 +9,16 @@ export async function generateStaticParams() {
     return Object.keys(tags).map((tag) => ({
         tag,
     }))
+}
+
+export async function generateMetadata({
+    params: { tag },
+}: {
+    params: { tag: string }
+}): Promise<Metadata> {
+    return {
+        title: `${tag} | ${siteTitle}`,
+    }
 }
 
 export default async function Page({ params }: { params: { tag: string } }) {

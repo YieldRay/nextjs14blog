@@ -12,7 +12,7 @@ export default function Time({
         <time
             className={clsx(
                 "text-sm py-0.5 text-gray-500 dark:text-stone-100",
-                className
+                className,
             )}
             dateTime={formatISO(date)}
         >

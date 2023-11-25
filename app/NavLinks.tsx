@@ -32,7 +32,7 @@ function useTheme() {
     const prefersColorScheme = usePrefersColorScheme()
     const [isThemeDark, setThemeDark] = useState(
         prefersColorScheme === "dark" ||
-            localStorage?.getItem("theme") === "dark"
+            localStorage?.getItem("theme") === "dark",
     )
     const syncClassName = (isDark: boolean) => {
         if (!document) return

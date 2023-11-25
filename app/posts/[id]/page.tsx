@@ -9,6 +9,7 @@ import {
 import Link from "next/link"
 import Time from "@/components/Time"
 import { Metadata, ResolvingMetadata } from "next"
+import { siteTitle } from "@/app/config"
 
 export async function generateStaticParams() {
     const posts = await getAllPosts()
@@ -20,13 +21,13 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(
     { params }: { params: { id: string } },
-    parent: ResolvingMetadata
+    parent: ResolvingMetadata,
 ): Promise<Metadata> {
     const id = params.id
     const post = await getPostById(id)
 
     return {
-        title: post.title,
+        title: `${post.title} | ${siteTitle}`,
     }
 }
 
@@ -36,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     return (
         <>
-            <article >
+            <article>
                 <section className="py-4">
                     <h1 className="py-8 text-center mx-auto">{post.title}</h1>
 
@@ -61,7 +62,10 @@ export default async function Page({ params }: { params: { id: string } }) {
                     </div>
                 </section>
 
-                <section  className="blog-article" dangerouslySetInnerHTML={{ __html: html }}></section>
+                <section
+                    className="blog-article"
+                    dangerouslySetInnerHTML={{ __html: html }}
+                ></section>
             </article>
         </>
     )

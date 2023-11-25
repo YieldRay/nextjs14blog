@@ -10,11 +10,15 @@
         .markdown-body {
             width: 80%;
         }
+        :nth-child(2) {
+            width: max(160px, 10vw);
+            flex-shrink: 1;
+        }
     }
 
     .markdown-body {
         max-width: 100%;
-        overflow: hidden;
+
         pre {
             margin: 2px 0;
             background-color: #161b22 !important;
@@ -22,9 +26,14 @@
     }
 
     .table-of-contents {
-        text-wrap: nowrap;
-        font-size: 13px;
+        white-space: nowrap;
         text-overflow: ellipsis;
+        & * {
+            overflow-x: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        font-size: 13px;
         overflow-x: hidden;
         overflow-y: auto;
         flex-shrink: 1;
@@ -35,6 +44,8 @@
 
         &-normal {
             display: none;
+            white-space: nowrap;
+            text-overflow: ellipsis;
             @media screen and (width>=767px) {
                 display: block;
             }
@@ -56,7 +67,7 @@
             right: 0;
             max-height: 100%;
             max-width: 100%;
-            overflow-x:hidden;
+            overflow-x: hidden;
             overflow-y: scroll;
             summary {
                 text-align: right;
@@ -76,6 +87,8 @@
     .markdown-body,
     .markdown-body * {
         max-width: 100%;
-        transition: color 0.15s, background-color 0.3s;
+        transition:
+            color 0.15s,
+            background-color 0.3s;
     }
 }

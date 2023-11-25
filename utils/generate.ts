@@ -19,7 +19,7 @@ export const postsDirectory = path.join(process.cwd(), "_posts")
 
 async function getAllIds() {
     const files = (await fs.readdir(postsDirectory)).filter((file) =>
-        file.endsWith(".md")
+        file.endsWith(".md"),
     )
     return files.map((file) => file.replace(/\.md$/, ""))
 }
@@ -34,13 +34,27 @@ export async function getPostById(id: string): Promise<Post> {
         title: z.string().default(id),
         date: z.coerce.date().default(() => new Date(fileStat.birthtimeMs)),
         update: z.coerce.date().default(() => new Date(fileStat.atimeMs)),
-        tags: z.array(z.string()).default([]),
-        categories: z.array(z.string()).default([]),
+        tags: z
+            .array(z.string())
+            .nullable()
+            .default([])
+            .transform((t) => (t ? t : [])),
+        categories: z
+            .array(z.string())
+            .nullable()
+            .default([])
+            .transform((t) => (t ? t : [])),
     })
 
-    const parsed = gmSchema.parse(data)
-    const post = { id, content, ...parsed }
+    const parseResult = gmSchema.safeParse(data)
 
+    if (!parseResult.success) {
+        throw new Error(
+            `Invalid gray-matter format for post <<${id}>>, reason: ${parseResult.error}`,
+        )
+    }
+
+    const post = { id, content, ...parseResult.data }
 
     return post
 }
