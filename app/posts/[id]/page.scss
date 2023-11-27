@@ -5,13 +5,15 @@
         display: inline-block;
     }
 
-    @media screen and (width>=767px) {
+    @media screen and (min-width: 768px) {
         display: flex;
+        justify-content: space-between;
         .markdown-body {
             width: 80%;
         }
         .table-of-contents-normal {
-            width: max(160px, 10vw);
+            // width: max(160px, 10vw);
+            max-width: 20%;
             flex-shrink: 1;
         }
     }
@@ -47,7 +49,7 @@
             display: none;
             white-space: nowrap;
             text-overflow: ellipsis;
-            @media screen and (width>=767px) {
+            @media screen and (min-width: 768px) {
                 display: block;
             }
             // take care of the HTML structure
@@ -124,7 +126,7 @@
             padding: 4px;
         }
 
-        li {
+        li > a {
             position: relative;
             &::before {
                 position: absolute;
@@ -138,7 +140,7 @@
                 opacity: 0;
             }
             &.active::before {
-                opacity: 0.25;
+                opacity: 0.35;
             }
         }
     }
@@ -146,8 +148,20 @@
     .markdown-body,
     .markdown-body * {
         max-width: 100%;
-        transition:
-            color 0.15s,
-            background-color 0.3s;
+        transition: color 0.15s, background-color 0.3s;
+    }
+}
+
+.wl-comment {
+    /* reset waline style */
+    .wl-panel {
+        margin: 0;
+    }
+    .wl-editor,
+    .wl-input {
+        transition-property: background-color, color;
+    }
+    .wl-editor {
+        padding: 0 2px;
     }
 }

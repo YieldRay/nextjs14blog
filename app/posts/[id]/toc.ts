@@ -26,17 +26,14 @@ function associateActiveHeadingWithTOC() {
 
 function activeById(id: string) {
     document
-        .querySelectorAll("ul.table-of-contents > li")
+        .querySelectorAll("ul.table-of-contents > li > a")
         .forEach((li) => li.classList.remove("active"))
 
-    Array.from(
-        // in case the browser does not support CSS :has() selector
+  
         document.querySelectorAll(
             `ul.table-of-contents > li > a[href="#${CSS.escape(id)}"]`,
-        ),
-    )
-        .map((a) => a.parentElement!)
-        .forEach((li) => li.classList.add("active"))
+        )  
+        .forEach((a) => a.classList.add("active"))
 }
 
 /**

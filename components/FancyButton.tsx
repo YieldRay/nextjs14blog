@@ -1,5 +1,5 @@
 import clsx from "clsx"
-import styles from "./FancyButton.module.css"
+import styles from "./FancyButton.module.scss"
 
 export default function FancyButton({ children, active, onClick }: any) {
     // MIT LICENSE

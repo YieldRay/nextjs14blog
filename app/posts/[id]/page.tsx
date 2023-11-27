@@ -10,6 +10,9 @@ import Link from "next/link"
 import Time from "@/components/Time"
 import { Metadata, ResolvingMetadata } from "next"
 import { siteTitle } from "@/app/config"
+import BackLink from "@/components/BackLink"
+import Waline from "@/components/Waline"
+import BackToTop from "@/components/BackToTop"
 import { ListenComponent } from "./toc"
 
 export async function generateStaticParams() {
@@ -22,7 +25,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(
     { params }: { params: { id: string } },
-    parent: ResolvingMetadata,
+    parent: ResolvingMetadata
 ): Promise<Metadata> {
     const id = params.id
     const post = await getPostById(id)
@@ -38,39 +41,51 @@ export default async function Page({ params }: { params: { id: string } }) {
 
     return (
         <>
-            <article>
-                <section className="py-4">
-                    <h1 className="py-8 text-center mx-auto">{post.title}</h1>
+        <article className="container px-2 md:px-6 mx-auto">
+            <section className="py-4">
+                <h1 className="py-8 text-center mx-auto">{post.title}</h1>
 
-                    <div className="flex items-center justify-center gap-2">
-                        <div className="flex items-center whitespace-nowrap">
-                            <Clock /> <Time date={post.date} />
-                        </div>
-                        <div className="flex items-center whitespace-nowrap">
-                            <Tag />
-                            <span className="inline-block max-w-[600px] overflow-x-auto">
-                                {post.tags?.map((tag) => (
-                                    <Link
-                                        key={tag}
-                                        href={`/tags/${tag}`}
-                                        className="hover:underline mr-1"
-                                    >
-                                        {tag}
-                                    </Link>
-                                ))}
-                            </span>
-                        </div>
+                <div className="flex items-center justify-center gap-2">
+                    <div className="flex items-center whitespace-nowrap">
+                        <Clock /> <Time date={post.date} />
                     </div>
-                </section>
+                    <div className="flex items-center whitespace-nowrap">
+                        <Tag />
+                        <span className="inline-block max-w-[600px] overflow-x-auto">
+                            {post.tags?.map((tag) => (
+                                <Link
+                                    key={tag}
+                                    href={`/tags/${tag}`}
+                                    className="hover:underline mr-1"
+                                >
+                                    {tag}
+                                </Link>
+                            ))}
+                        </span>
+                    </div>
+                </div>
+            </section>
 
-                <section
-                    className="blog-article"
-                    dangerouslySetInnerHTML={{ __html: html }}
-                ></section>
+            <section
+                className="blog-article"
+                dangerouslySetInnerHTML={{ __html: html }}
+            />
 
-                <ListenComponent />
-            </article>
+            <section className="mt-8 mb-4 mx-1">
+                <BackLink />
+            </section>
+
+            <ListenComponent />
+
+            <section className="md:max-w-[80%]">
+                <Waline />
+            </section>
+        </article>
+        
+        <BackToTop/>
         </>
+
+
     )
 }
 
