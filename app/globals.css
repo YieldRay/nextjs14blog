@@ -51,7 +51,10 @@ html.dark {
         @apply text-sky-600;
     }
 }
-
+body {
+    min-height: 100vh;
+    scroll-behavior: smooth;
+}
 html,
 body {
     padding: 0;
@@ -89,4 +92,9 @@ body {
 
 * {
     -webkit-tap-highlight-color: transparent;
+}
+
+.wl-comment .wl-panel {
+    /* reset waline style */
+    margin: 0;
 }

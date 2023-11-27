@@ -1,3 +1,6 @@
+.markdown-body pre > code {
+    color: #dcdcdc;
+}
 .hljs {
     display: block;
     overflow-x: auto;

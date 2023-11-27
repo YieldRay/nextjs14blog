@@ -10,6 +10,7 @@ import Link from "next/link"
 import Time from "@/components/Time"
 import { Metadata, ResolvingMetadata } from "next"
 import { siteTitle } from "@/app/config"
+import { ListenComponent } from "./toc"
 
 export async function generateStaticParams() {
     const posts = await getAllPosts()
@@ -66,6 +67,8 @@ export default async function Page({ params }: { params: { id: string } }) {
                     className="blog-article"
                     dangerouslySetInnerHTML={{ __html: html }}
                 ></section>
+
+                <ListenComponent />
             </article>
         </>
     )

@@ -12,7 +12,7 @@ export default async function Page() {
 
     return (
         <>
-            <ul>
+            <ul className="flex gap-x-6 gap-y-2 flex-wrap">
                 {Object.entries(tags).map(([tag, posts]) => (
                     <li key={tag}>
                         <Link

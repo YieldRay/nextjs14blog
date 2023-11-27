@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     metadataBase: new URL("https://ray.deno.dev"),
     openGraph: {
         images: `https://og-image.vercel.app/${encodeURI(
-            siteTitle,
+            siteTitle
         )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.zeit.co%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`,
     },
 }
@@ -24,12 +24,12 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body>
-                <header>
+            <body className="flex flex-col">
+                <header className="pt-8 pb-4">
                     <Avatar />
                     <NavLinks />
                 </header>
-                {children}
+                <main className="flex-grow">{children}</main>
             </body>
         </html>
     )
@@ -37,7 +37,7 @@ export default function RootLayout({
 
 function Avatar() {
     return (
-        <div className="py-2 flex items-center justify-center">
+        <div className="flex items-center justify-center">
             <Link href="/">
                 <div className="transition duration-500 hover:scale-105">
                     <Image

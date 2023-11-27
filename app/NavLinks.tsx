@@ -13,7 +13,7 @@ export default function NavLink() {
     const equal = (a: string, b: string) =>
         a.replace(/\/$/, "") === b.replace(/\/$/, "")
     return (
-        <nav className="flex justify-center items-center gap-2">
+        <nav className="flex justify-center items-center gap-3">
             {pages.map(([name, href]) => (
                 <Link key={href} href={href}>
                     <FancyButton active={equal(pathname, href)}>
